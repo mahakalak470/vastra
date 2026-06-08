@@ -282,9 +282,11 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <script>
-const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'https://vastra-backend-yo5w.onrender.com/api' : '/api';
-let ADMIN_TOKEN = localStorage.getItem('vastra_admin_token');
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000/api'
+    : 'https://vastra-backend-yo5w.onrender.com/api';
 
+let ADMIN_TOKEN = localStorage.getItem('vastra_admin_token');
 function adminToast(msg, type) {
     const wrap = document.getElementById('adminToastWrap');
     const t = document.createElement('div');
