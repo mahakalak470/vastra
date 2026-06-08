@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="assets/images/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VASTRA - Premium Streetwear & Modern Fashion Brand. Wear Your Identity. Oversized tees, anime collections, mythology-inspired apparel, and custom graphic designs.">
+    <meta name="keywords" content="Vastra, streetwear, oversized t-shirts, anime clothing, mythology apparel, custom t-shirts, premium fashion, India">
+    <meta name="author" content="Ayush Kumar">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="VASTRA - Wear Your Identity">
+    <meta property="og:description" content="Premium Streetwear & Modern Fashion Brand. Oversized tees, anime collections, mythology-inspired apparel.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vastrahub.netlify.app">
+    <meta property="og:image" content="assets/images/hero-bg.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VASTRA - Wear Your Identity">
+    <meta name="twitter:description" content="Premium Streetwear & Modern Fashion Brand.">
+
+    <title>VASTRA - Wear Your Identity | Premium Streetwear & Fashion</title>
+
+    <link rel="canonical" href="https://vastrafashion.in">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ClothingStore",
+        "name": "VASTRA",
+        "description": "Premium Streetwear & Modern Fashion Brand",
+        "url": "https://vastrahub.netlify.app",
+        "telephone": "+918168540355",
+        
+        "founder": {
+            "@type": "Person",
+            "name": "Jatin"
+        },
+        "sameAs": [
+            "https://instagram.com/chota_pepsu_"
+        ]
+    }
+    </script>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">VASTRA</div>
+            <div class="preloader-shimmer"></div>
+            <div class="preloader-bar">
+                <div class="preloader-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">VASTRA</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#products">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#founder">Founder</a></li>
+                <li><a href="#custom-design">Custom</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="admin.html" class="nav-admin-link"><i class="fas fa-lock"></i> Admin</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-action-btn" id="searchToggle" aria-label="Search"><i class="fas fa-search"></i></button>
+                <button class="nav-action-btn" id="wishlistToggle" aria-label="Wishlist">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </button>
+                <button class="nav-action-btn" id="cartToggle" aria-label="Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </button>
+                <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SEARCH OVERLAY -->
+    <div id="searchOverlay" class="search-overlay">
+        <div class="search-overlay-inner">
+            <button class="search-close" id="searchClose"><i class="fas fa-times"></i></button>
+            <h2>Search VASTRA</h2>
+            <div class="search-input-wrap">
+                <input type="text" id="searchInput" placeholder="Search products, collections..." autocomplete="off">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> Your Cart</h3>
+            <button class="cart-close" id="cartClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">&#8377;0</span>
+            </div>
+            <p class="cart-note">Checkout via WhatsApp</p>
+            <button class="btn btn-gold btn-full" id="checkoutBtn">
+                <i class="fab fa-whatsapp"></i> Order on WhatsApp
+            </button>
+        </div>
+        <div class="cart-empty" id="cartEmpty">
+            <i class="fas fa-shopping-bag"></i>
+            <p>Your cart is empty</p>
+            <a href="#products" class="btn btn-outline-gold" onclick="closeCart()">Start Shopping</a>
+        </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div id="wishlistOverlay" class="cart-overlay"></div>
+    <div id="wishlistSidebar" class="cart-sidebar wishlist-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-heart"></i> Wishlist</h3>
+            <button class="cart-close" id="wishlistClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="wishlistItems"></div>
+        <div class="cart-empty" id="wishlistEmpty">
+            <i class="fas fa-heart"></i>
+            <p>Your wishlist is empty</p>
+            <a href="#products" class="btn btn-outline-gold" onclick="closeWishlist()">Browse Products</a>
+        </div>
+    </div>
+
+    <!-- SIZE GUIDE MODAL -->
+    <div id="sizeGuideModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-lg">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Size Guide</h2>
+            <p class="modal-subtitle">All measurements are in inches</p>
+            <div class="size-table-wrap">
+                <table class="size-table">
+                    <thead>
+                        <tr>
+                            <th>Size</th><th>Chest</th><th>Length</th><th>Shoulder</th><th>Sleeve</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>S</td><td>38</td><td>27</td><td>17</td><td>8</td></tr>
+                        <tr><td>M</td><td>40</td><td>28</td><td>18</td><td>8.5</td></tr>
+                        <tr><td>L</td><td>42</td><td>29</td><td>19</td><td>9</td></tr>
+                        <tr><td>XL</td><td>44</td><td>30</td><td>20</td><td>9.5</td></tr>
+                        <tr><td>XXL</td><td>46</td><td>31</td><td>21</td><td>10</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="size-tips">
+                <h4>Fit Tips</h4>
+                <ul>
+                    <li>Our oversized tees have a relaxed, dropped-shoulder fit</li>
+                    <li>For a regular fit, size down one size</li>
+                    <li>For maximum oversized look, size up one size</li>
+                    <li>Model is 5'10" wearing size L for oversized fit</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL -->
+    <div id="quickViewModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-xl">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <div class="quick-view-grid" id="quickViewContent"></div>
+        </div>
+    </div>
+
+<!-- PRODUCT ZOOM MODAL -->
+<div id="zoomModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content zoom-content">
+        <button class="modal-close"><i class="fas fa-times"></i></button>
+        <img id="zoomImage" src="" alt="Product Zoom">
+    </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-lg checkout-modal-content">
+        <button class="modal-close" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button>
+        <div class="checkout-progress">
+            <button class="checkout-step-btn active" data-step="1"><span>1</span> Details</button>
+            <button class="checkout-step-btn" data-step="2"><span>2</span> Review</button>
+            <button class="checkout-step-btn" data-step="3"><span>3</span> Payment</button>
+        </div>
+
+        <div class="checkout-step active" id="checkoutStep1">
+            <h2 class="checkout-step-title">Delivery Details</h2>
+            <div class="checkout-form-grid">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="coName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="coPhone" placeholder="10-digit phone number" required>
+                </div>
+                <div class="form-group" style="grid-column:1/-1">
+                    <label>Email (Optional)</label>
+                    <input type="email" id="coEmail" placeholder="your@email.com">
+                </div>
+                <div class="form-group" style="grid-column:1/-1">
+                    <label>Address *</label>
+                    <input type="text" id="coAddress" placeholder="House no, street, area" required>
+                </div>
+                <div class="form-group" style="grid-column:1/-1">
+                    <label>Address Line 2</label>
+                    <input type="text" id="coAddress2" placeholder="Landmark, etc. (optional)">
+                </div>
+                <div class="form-group">
+                    <label>City *</label>
+                    <input type="text" id="coCity" placeholder="City" required>
+                </div>
+                <div class="form-group">
+                    <label>State *</label>
+                    <input type="text" id="coState" placeholder="State" required>
+                </div>
+                <div class="form-group">
+                    <label>Pincode *</label>
+                    <input type="text" id="coPincode" placeholder="6-digit pincode" required>
+                </div>
+            </div>
+            <button class="btn btn-gold btn-full checkout-next-btn" onclick="goToStep(2)">Review Order <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="checkout-step" id="checkoutStep2">
+            <h2 class="checkout-step-title">Review Your Order</h2>
+            <div class="checkout-summary" id="checkoutSummary"></div>
+            <div class="checkout-total-row">
+                <span>Total</span>
+                <span id="checkoutTotal">&#8377;0</span>
+            </div>
+            <div class="checkout-btn-row">
+                <button class="btn btn-outline-gold" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn btn-gold" id="placeOrderBtn" onclick="placeOrder()"><i class="fas fa-check"></i> Place Order</button>
+            </div>
+        </div>
+
+        <div class="checkout-step" id="checkoutStep3">
+            <div class="checkout-success">
+                <div class="checkout-success-icon"><i class="fas fa-check-circle"></i></div>
+                <h2>Order Placed Successfully!</h2>
+                <p class="checkout-order-id">Order ID: <strong id="orderIdDisplay">-</strong></p>
+                <p class="checkout-order-total">Total: <strong id="orderTotalDisplay">-</strong></p>
+
+                <div class="checkout-qr-section">
+                    <h3>Pay via UPI</h3>
+                    <p>Scan the QR code below to pay</p>
+                    <div class="checkout-qr-box">
+                        <img src="assets/images/qr-code.png" alt="UPI QR Code" onerror="this.parentElement.innerHTML='<div class=\'checkout-qr-placeholder\'><i class=\'fas fa-qrcode\'></i><p>QR Code</p><p class=\'qr-small\'>Coming Soon</p></div>'">
+                    </div>
+                    <p class="checkout-upi-id">UPI ID: <strong>jatinpepsu123@okhdfcbank</strong></p>
+                    <p class="checkout-pay-note">Pay the total amount using the QR code above</p>
+                </div>
+
+                <div class="checkout-proof-section">
+                    <h3>Send Payment Proof</h3>
+                    <p>After payment, send the screenshot on WhatsApp to confirm your order</p>
+                    <button class="btn btn-gold btn-lg btn-full" onclick="sendProofWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Send Proof on WhatsApp
+                    </button>
+                </div>
+
+                <a href="#products" class="btn btn-outline-gold" onclick="closeModal('checkoutModal')">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero-section">
+            <div class="hero-bg">
+                <div class="hero-bg-img" style="background-image: url('assets/images/hero-bg.jpg')"></div>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge animate-up">Premium Streetwear</div>
+                <h1 class="hero-title animate-up delay-1">VASTRA</h1>
+                <p class="hero-tagline animate-up delay-2">Wear Your Identity</p>
+                <div class="hero-buttons animate-up delay-3">
+                    <a href="#products" class="btn btn-gold btn-lg">Shop Collection</a>
+                    <a href="https://wa.me/918168540355?text=Hello%20Vastra%20Team%2C%20I%20want%20to%20order%20a%20custom%20t-shirt." class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+                        <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- BRAND MISSION -->
+        <section id="mission" class="section section-dark">
+            <div class="container">
+                <div class="mission-content reveal">
+                    <span class="section-label">Our Mission</span>
+                    <h2 class="section-title-sm">Redefining Streetwear with Purpose</h2>
+                    <p class="mission-text">At VASTRA, we believe clothing is more than fabric — it's a statement of who you are. Our mission is to create premium streetwear that empowers individuals to express their unique identity through bold designs, superior quality, and cultural storytelling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRAND VISION -->
+        <section class="section section-darker">
+            <div class="container">
+                <div class="vision-content reveal">
+                    <span class="section-label">Our Vision</span>
+                    <h2 class="section-title-sm">To Be India's Most Authentic Streetwear Brand</h2>
+                    <p class="mission-text">We envision a future where every piece of clothing tells a story — from mythology-inspired graphics to anime-fueled designs. VASTRA aims to bridge the gap between culture and fashion, creating wearable art that resonates with the soul of a new generation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED COLLECTIONS -->
+        <section id="collections" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Explore</span>
+                    <h2 class="section-title">Featured Collections</h2>
+                    <p class="section-desc">Curated collections crafted for those who dare to stand out</p>
+                </div>
+                <div class="collections-grid reveal">
+                    <a href="#products" class="collection-card" data-filter="mythology" onclick="filterFromCollection('mythology')">
+                        <div class="collection-img" style="background-image: url('assets/images/collections/mythology.jpg')"></div>
+                        <div class="collection-overlay">
+                            <span class="collection-name">Mythology Collection</span>
+                            <span class="collection-tag">Ancient Stories, Modern Wear</span>
+                            <span class="collection-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="#products" class="collection-card" data-filter="anime" onclick="filterFromCollection('anime')">
+                        <div class="collection-img" style="background-image: url('assets/images/collections/anime.jpg')"></div>
+                        <div class="collection-overlay">
+                            <span class="collection-name">Anime Collection</span>
+                            <span class="collection-tag">Your Favorite Characters, Premium Prints</span>
+                            <span class="collection-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="#products" class="collection-card" data-filter="streetwear" onclick="filterFromCollection('streetwear')">
+                        <div class="collection-img" style="background-image: url('assets/images/collections/streetwear.jpg')"></div>
+                        <div class="collection-overlay">
+                            <span class="collection-name">Streetwear Collection</span>
+                            <span class="collection-tag">Urban Culture Meets Premium Fashion</span>
+                            <span class="collection-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="#products" class="collection-card" data-filter="oversized" onclick="filterFromCollection('oversized')">
+                        <div class="collection-img" style="background-image: url('assets/images/collections/oversized.jpg')"></div>
+                        <div class="collection-overlay">
+                            <span class="collection-name">Oversized Tees</span>
+                            <span class="collection-tag">Comfort Redefined, Style Elevated</span>
+                            <span class="collection-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIMITED EDITION -->
+        <section id="limited-edition" class="section section-gold-accent">
+            <div class="container">
+                <div class="limited-edition-inner reveal">
+                    <div class="limited-badge"><i class="fas fa-fire"></i> Limited Drop</div>
+                    <h2 class="limited-title">Limited Edition Collection</h2>
+                    <p class="limited-desc">Exclusive drops that won't restock. Once they're gone, they're gone forever.</p>
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-num" id="countDays">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-num" id="countHours">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-num" id="countMins">00</span>
+                            <span class="countdown-label">Mins</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-num" id="countSecs">00</span>
+                            <span class="countdown-label">Secs</span>
+                        </div>
+                    </div>
+                    <a href="#products" class="btn btn-gold btn-lg">Shop Limited Edition</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRENDING PRODUCTS -->
+        <section id="products" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Shop Now</span>
+                    <h2 class="section-title">Trending Products</h2>
+                    <p class="section-desc">Premium quality oversized tees with exclusive designs</p>
+                </div>
+                <div class="products-toolbar reveal">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">All</button>
+                        <button class="filter-tab" data-filter="mythology">Mythology</button>
+                        <button class="filter-tab" data-filter="anime">Anime</button>
+                        <button class="filter-tab" data-filter="streetwear">Streetwear</button>
+                        <button class="filter-tab" data-filter="oversized">Oversized</button>
+                    </div>
+                    <div class="sort-select">
+                        <select id="sortSelect">
+                            <option value="default">Sort By</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Top Rated</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="products-grid" id="productsGrid"></div>
+                <div class="no-products" id="noProducts" style="display:none">
+                    <i class="fas fa-search"></i>
+                    <p>No products found</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECENTLY VIEWED -->
+        <section id="recentlyViewed" class="section section-darker" style="display:none">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Your History</span>
+                    <h2 class="section-title">Recently Viewed</h2>
+                </div>
+                <div class="recently-viewed-scroll" id="recentlyViewedGrid"></div>
+            </div>
+        </section>
+
+        <!-- BEHIND THE DESIGNS -->
+        <section id="behindDesigns" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">The Process</span>
+                    <h2 class="section-title">Behind The Designs</h2>
+                    <p class="section-desc">Every VASTRA piece goes through a meticulous creative journey</p>
+                </div>
+                <div class="process-timeline reveal">
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Concept</h3>
+                        <p>Every design starts with an idea — inspired by mythology, anime, street culture, and the stories that move us.</p>
+                    </div>
+                    <div class="process-connector"></div>
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-pencil-alt"></i></div>
+                        <h3>Sketch</h3>
+                        <p>Our artists hand-draw and digitally craft each design, ensuring every detail tells a story.</p>
+                    </div>
+                    <div class="process-connector"></div>
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-print"></i></div>
+                        <h3>Print</h3>
+                        <p>Premium DTF printing on 240 GSM cotton ensures vibrant colors and lasting quality.</p>
+                    </div>
+                    <div class="process-connector"></div>
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-truck"></i></div>
+                        <h3>Ship</h3>
+                        <p>Carefully packed and shipped pan-India, so your VASTRA piece reaches you in perfect condition.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT VASTRA -->
+        <section id="about" class="section section-dark">
+            <div class="container">
+                <div class="about-grid reveal">
+                    <div class="about-image">
+                        <div class="about-img-inner" style="background-image: url('assets/images/about.jpg')"></div>
+                        <div class="about-img-accent"></div>
+                    </div>
+                    <div class="about-text">
+                        <span class="section-label">Our Story</span>
+                        <h2 class="section-title">About VASTRA</h2>
+                        <p>Vastra is a modern streetwear and fashion brand focused on premium quality oversized t-shirts, custom graphic designs, anime collections, mythology-inspired apparel, and trend-driven fashion. Every design is crafted to help individuals express their personality through clothing.</p>
+                        <p>Founded with the belief that fashion should be a canvas for self-expression, VASTRA blends cultural narratives with contemporary streetwear aesthetics to create pieces that are as unique as the people who wear them.</p>
+                        <div class="about-stats">
+                            <div class="stat">
+                                <span class="stat-num" data-count="5000">0</span><span class="stat-plus">+</span>
+                                <span class="stat-label">Happy Customers</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-num" data-count="200">0</span><span class="stat-plus">+</span>
+                                <span class="stat-label">Unique Designs</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-num" data-count="50">0</span><span class="stat-plus">+</span>
+                                <span class="stat-label">Collections</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEET THE FOUNDER -->
+        <section id="founder" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Leadership</span>
+                    <h2 class="section-title">Meet The Founder</h2>
+                </div>
+                <div class="founder-card reveal">
+                    <div class="founder-photo">
+                        <div class="founder-img" style="background-image: url('assets/images/founder.jpg')"></div>
+                    </div>
+                    <div class="founder-info">
+                        <h3 class="founder-name">Jatin</h3>
+                        <p class="founder-title">Founder & Creative Director</p>
+                        <p class="founder-bio">Vastra was founded by Jatin with a vision to create fashion that blends individuality, creativity, and premium streetwear culture. From custom graphic designs to trend-driven collections, Vastra is built for people who want to stand out and wear their identity with confidence.</p>
+                        <div class="founder-social">
+                            <a href="https://instagram.com/chota_pepsu_" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/918168540355" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       
+
+        <!-- WHY CHOOSE US -->
+        <section id="whyChoose" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Why VASTRA</span>
+                    <h2 class="section-title">Why Choose Us</h2>
+                </div>
+                <div class="features-grid reveal">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-tshirt"></i></div>
+                        <h3>Premium Fabric</h3>
+                        <p>240 GSM heavyweight cotton for unmatched comfort and durability</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-print"></i></div>
+                        <h3>High Quality DTF Printing</h3>
+                        <p>Vibrant, long-lasting prints that won't crack or fade</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                        <h3>Custom Design Available</h3>
+                        <p>Turn your ideas into premium wearable art</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                        <h3>Pan India Shipping</h3>
+                        <p>Fast and reliable delivery across India</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Secure Payments</h3>
+                        <p>100% secure payment options for worry-free shopping</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- CUSTOM DESIGN / AI DESIGN SECTION -->
+<section id="custom-design" class="section section-dark">
+    <div class="container">
+        <div class="custom-design-grid reveal">
+            <div class="custom-design-text">
+                <span class="section-label">Personalize</span>
+                <h2 class="section-title">AI Design Studio</h2>
+                <p>Turn your imagination into wearable art! Describe your design idea and our AI will generate a unique t-shirt design for you. Unlimited generations, completely free.</p>
+                <div class="ai-features">
+                    <div class="ai-feature"><i class="fas fa-magic"></i> AI-Powered Generation</div>
+                    <div class="ai-feature"><i class="fas fa-infinity"></i> Unlimited Designs</div>
+                    <div class="ai-feature"><i class="fas fa-bolt"></i> Instant Results</div>
+                </div>
+            </div>
+            <div class="custom-design-form-wrap ai-design-form-wrap">
+                <h3>Generate Your Design</h3>
+                <div class="ai-form">
+                    <div class="form-group">
+                        <label>Describe Your Design *</label>
+                        <textarea id="aiPrompt" rows="3" placeholder="e.g. A fierce dragon wrapped around a samurai sword, dark background, anime style..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Style Preset</label>
+                        <select id="aiStyle">
+                            <option value="custom">Custom (Your Prompt)</option>
+                            <option value="anime">Anime Style</option>
+                            <option value="mythology">Mythology Art</option>
+                            <option value="streetwear">Streetwear Graphic</option>
+                            <option value="minimal">Minimalist</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-gold btn-full" id="aiGenerateBtn" onclick="generateAIDesign()">
+                        <i class="fas fa-magic"></i> Generate Design
+                    </button>
+                </div>
+                <div class="ai-result" id="aiResult" style="display:none">
+                    <div class="ai-result-image">
+                        <img id="aiResultImage" src="" alt="AI Generated Design">
+                    </div>
+                    <div class="ai-result-actions">
+                        <button class="btn btn-gold" onclick="orderAIDesign()"><i class="fab fa-whatsapp"></i> Order This Design</button>
+                        <button class="btn btn-outline-gold" onclick="generateAIDesign()"><i class="fas fa-redo"></i> Regenerate</button>
+                    </div>
+                </div>
+                <div class="ai-loading" id="aiLoading" style="display:none">
+                    <div class="ai-loading-spinner"></div>
+                    <p>AI is creating your design...</p>
+                    <p class="ai-loading-sub">This may take up to 30 seconds</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- SIZE GUIDE BUTTON -->
+        <section class="section section-darker">
+            <div class="container text-center reveal">
+                <h3>Not Sure About Your Size?</h3>
+                <p style="margin-bottom:1.5rem; color: var(--text-secondary)">Check our detailed size guide for the perfect fit</p>
+                <button class="btn btn-outline-gold btn-lg" id="openSizeGuide">
+                    <i class="fas fa-ruler"></i> View Size Guide
+                </button>
+            </div>
+        </section>
+
+        
+        <!-- WHATSAPP ORDER SECTION -->
+        <section id="whatsapp-order" class="section section-gold-accent">
+            <div class="container text-center reveal">
+                <div class="whatsapp-order-inner">
+                    <div class="whatsapp-icon-big"><i class="fab fa-whatsapp"></i></div>
+                    <h2 class="section-title">Order Directly on WhatsApp</h2>
+                    <p>Prefer a personal touch? Chat with us directly on WhatsApp and place your order hassle-free. We'll guide you through sizes, designs, and payment.</p>
+                    <a href="https://wa.me/918168540355?text=Hello%20Vastra%20Team%2C%20I%20want%20to%20order%20a%20custom%20t-shirt." class="btn btn-gold btn-lg" target="_blank" rel="noopener">
+                        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHATSAPP ORDER TRACKING -->
+        <section class="section section-darker">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Track</span>
+                    <h2 class="section-title">WhatsApp Order Tracking</h2>
+                </div>
+                <div class="tracking-steps reveal">
+                    <div class="tracking-step">
+                        <div class="tracking-num">1</div>
+                        <h3>Place Order</h3>
+                        <p>Send your order details on WhatsApp</p>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="tracking-num">2</div>
+                        <h3>Confirmation</h3>
+                        <p>Receive order confirmation with details</p>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="tracking-num">3</div>
+                        <h3>Production</h3>
+                        <p>Your custom piece is crafted with care</p>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="tracking-num">4</div>
+                        <h3>Shipped</h3>
+                        <p>Get tracking details via WhatsApp</p>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="tracking-num">5</div>
+                        <h3>Delivered</h3>
+                        <p>Rock your new VASTRA piece!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUSTOMER REVIEWS -->
+        <section id="reviews" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Testimonials</span>
+                    <h2 class="section-title">Customer Reviews</h2>
+                </div>
+                <div class="reviews-grid reveal">
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"The quality is insane! The oversized fit is perfect and the mythology print is stunning. Best streetwear brand I've found."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">R</div>
+                            <div>
+                                <span class="review-name">Rahul S.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"Ordered a custom anime design and it came out exactly how I wanted. The DTF print quality is next level. Will order again!"</p>
+                        <div class="review-author">
+                            <div class="review-avatar">A</div>
+                            <div>
+                                <span class="review-name">Ankit M.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p class="review-text">"Fast delivery, premium fabric, and the design looks even better in person. VASTRA is my go-to for streetwear now."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">P</div>
+                            <div>
+                                <span class="review-name">Priya K.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"The Shiva mythology tee is fire. Got so many compliments. The fabric is thick and comfortable. 10/10 recommend."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">V</div>
+                            <div>
+                                <span class="review-name">Vikram R.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"WhatsApp ordering was so smooth. The team was super helpful with size guidance. My custom design tee is perfect."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">S</div>
+                            <div>
+                                <span class="review-name">Sneha D.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p class="review-text">"Best oversized tees I've bought in India. The printing quality doesn't fade after multiple washes. Worth every rupee."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">D</div>
+                            <div>
+                                <span class="review-name">Deepak T.</span>
+                                <span class="review-verified"><i class="fas fa-check-circle"></i> Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="section section-dark">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Help</span>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-list reveal">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What fabric do you use?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We use 240 GSM heavyweight premium cotton for all our t-shirts. This ensures maximum comfort, durability, and the perfect oversized drape.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I place an order?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can add items to cart on our website and checkout via WhatsApp, or directly message us on WhatsApp at 8168540355 with your requirements.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is DTF printing?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>DTF (Direct to Film) is a premium printing technology that produces vibrant, detailed, and long-lasting prints. Unlike traditional methods, DTF prints won't crack or fade even after multiple washes.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I get a custom design made?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Absolutely! We specialize in custom designs. Just send us your idea on WhatsApp and we'll create a premium custom t-shirt just for you.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How long does delivery take?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We ship pan-India. Standard delivery takes 5-7 business days. Express delivery options are available for select cities at 2-3 business days.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is your return policy?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We offer exchanges for size issues within 7 days of delivery. Custom design orders are non-returnable. Please contact us on WhatsApp for any issues.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I track my order?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Once your order is shipped, we'll share tracking details with you on WhatsApp. You can also message us anytime for order updates.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Do you offer bulk/corporate orders?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! We handle bulk and corporate orders with custom branding. Contact us on WhatsApp for special pricing and details.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section class="section section-darker">
+            <div class="container text-center reveal">
+                <h2 class="section-title-sm">Join The VASTRA Family</h2>
+                <p style="margin-bottom:2rem; color: var(--text-secondary)">Get exclusive drops, early access, and special offers delivered to your inbox</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-gold">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Get In Touch</span>
+                    <h2 class="section-title">Contact Us</h2>
+                </div>
+                <div class="contact-grid reveal">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <h4>WhatsApp</h4>
+                                <p>+91 8168540355</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-instagram"></i>
+                            <div>
+                                <h4>Instagram</h4>
+                                <p>@_vastra__hub_</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                          
+                            <div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">VASTRA</h3>
+                    <p class="footer-tagline">Wear Your Identity</p>
+                    <p class="footer-brand-desc">Premium streetwear and fashion brand focused on quality, creativity, and self-expression.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/_vastra__hub_" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/918168540355" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#collections">Collections</a></li>
+                        <li><a href="#products">Shop</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#founder">Founder</a></li>
+                        <li><a href="#custom-design">Custom Design</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Collections</h4>
+                    <ul>
+                        <li><a href="#products" onclick="filterFromCollection('mythology')">Mythology</a></li>
+                        <li><a href="#products" onclick="filterFromCollection('anime')">Anime</a></li>
+                        <li><a href="#products" onclick="filterFromCollection('streetwear')">Streetwear</a></li>
+                        <li><a href="#products" onclick="filterFromCollection('oversized')">Oversized Tees</a></li>
+                        <li><a href="#limited-edition">Limited Edition</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="javascript:void(0)" id="footerSizeGuide">Size Guide</a></li>
+                        <li><a href="https://wa.me/918168540355?text=Hello%20Vastra%20Team%2C%20I%20need%20help%20with%20my%20order." target="_blank" rel="noopener">Order Tracking</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <p>&copy; 2025 VASTRA. All rights reserved. Founded By <strong>Jatin</strong></p>
+                </div>
+                <div class="footer-bottom-right">
+                    <p>Developed By <strong>Ayush Kumar</strong></p>
+                    <a href="https://wa.me/918168540355?text=Hello%20Ayush%20Sir%2C%20I%20want%20a%20website%20for%20my%20business.%20Please%20share%20pricing%20and%20details." class="btn btn-outline-gold btn-sm" target="_blank" rel="noopener">
+                        Need a Website for Your Business?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/918168540355?text=Hello%20Vastra%20Team%2C%20I%20want%20to%20order%20a%20custom%20t-shirt." class="floating-btn floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- FLOATING INSTAGRAM BUTTON -->
+    <a href="https://instagram.com/_vastra__hub_" class="floating-btn floating-instagram" target="_blank" rel="noopener" aria-label="Follow on Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" class="floating-btn floating-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- SCRIPTS -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

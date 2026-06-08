@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VASTRA Admin Dashboard</title>
+<link rel="icon" href="assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--black:#000;--white:#fff;--gold:#D4AF37;--gold-light:#E8C94A;--dark-bg:#0A0A0A;--dark-card:#111;--dark-card-hover:#1A1A1A;--dark-border:#222;--text-primary:#fff;--text-secondary:#999;--text-muted:#666;--success:#00c853;--danger:#ff4444;--warning:#ffab00;--radius:8px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-box{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:2.5rem;width:100%;max-width:400px;text-align:center}
+.login-logo{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--gold);letter-spacing:5px;margin-bottom:.3rem}
+.login-sub{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:3px;margin-bottom:2rem}
+.login-box input{width:100%;padding:.75rem 1rem;background:var(--dark-bg);border:1px solid var(--dark-border);border-radius:4px;color:var(--text-primary);font-size:.9rem;margin-bottom:1rem;transition:.3s}
+.login-box input:focus{outline:none;border-color:var(--gold)}
+.login-btn{width:100%;padding:.75rem;background:var(--gold);color:var(--black);border:none;border-radius:4px;font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:.3s}
+.login-btn:hover{background:var(--gold-light)}
+.login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-error{color:var(--danger);font-size:.8rem;margin-bottom:1rem;display:none}
+
+/* LAYOUT */
+.admin-layout{display:flex;min-height:100vh}
+.admin-sidebar{width:240px;background:var(--black);border-right:1px solid var(--dark-border);padding:1.5rem 0;flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100}
+.admin-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:var(--gold);letter-spacing:5px;text-align:center;margin-bottom:.2rem}
+.admin-logo-sub{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:3px;text-align:center;margin-bottom:2rem}
+.admin-nav-item{display:flex;align-items:center;gap:.8rem;padding:.75rem 1.5rem;color:var(--text-secondary);font-size:.85rem;cursor:pointer;transition:.2s;border-left:3px solid transparent}
+.admin-nav-item:hover,.admin-nav-item.active{color:var(--gold);background:rgba(212,175,55,.05);border-left-color:var(--gold)}
+.admin-nav-item i{width:18px;text-align:center}
+.admin-nav-spacer{flex:1}
+.admin-main{flex:1;margin-left:240px;padding:2rem;overflow-y:auto;min-height:100vh}
+
+/* HEADER */
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+.admin-header h1{font-family:'Playfair Display',serif;font-size:1.5rem}
+.admin-header-right{display:flex;align-items:center;gap:1rem}
+.admin-header-right a{color:var(--gold);font-size:.8rem;display:flex;align-items:center;gap:.4rem}
+.admin-logout{cursor:pointer;color:var(--text-muted)!important}
+.admin-logout:hover{color:var(--danger)!important}
+
+/* CARDS */
+.admin-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.admin-card{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:1.2rem}
+.admin-card-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem}
+.admin-card-value{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold)}
+.admin-card-sub{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
+
+/* TABLE */
+.admin-table-wrap{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem}
+.admin-table-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--dark-border)}
+.admin-table-header h3{font-size:1rem;font-weight:600}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{text-align:left;padding:.7rem 1.2rem;font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--dark-border);font-weight:600}
+.admin-table td{padding:.7rem 1.2rem;font-size:.85rem;border-bottom:1px solid var(--dark-border)}
+.admin-table tr:last-child td{border-bottom:none}
+.admin-table tr:hover td{background:rgba(255,255,255,.02)}
+.badge-status{display:inline-block;padding:.2rem .6rem;border-radius:3px;font-size:.7rem;font-weight:600;text-transform:uppercase}
+.badge-placed{background:rgba(255,171,0,.15);color:var(--warning)}
+.badge-confirmed,.badge-processing,.badge-shipped{background:rgba(0,200,83,.15);color:var(--success)}
+.badge-delivered{background:rgba(0,200,83,.25);color:var(--success)}
+.badge-cancelled{background:rgba(255,68,68,.15);color:var(--danger)}
+.badge-pending{background:rgba(255,171,0,.15);color:var(--warning)}
+.badge-verified{background:rgba(0,200,83,.15);color:var(--success)}
+.badge-rejected{background:rgba(255,68,68,.15);color:var(--danger)}
+
+/* BUTTONS */
+.btn-sm{padding:.35rem .7rem;font-size:.75rem;border:none;border-radius:4px;cursor:pointer;font-weight:500;transition:.2s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-gold-sm{background:var(--gold);color:var(--black)}
+.btn-gold-sm:hover{background:var(--gold-light)}
+.btn-outline-sm{background:transparent;border:1px solid var(--dark-border);color:var(--text-secondary)}
+.btn-outline-sm:hover{border-color:var(--gold);color:var(--gold)}
+.btn-danger-sm{background:rgba(255,68,68,.15);color:var(--danger);border:1px solid rgba(255,68,68,.3)}
+.btn-danger-sm:hover{background:rgba(255,68,68,.25)}
+.btn-success-sm{background:rgba(0,200,83,.15);color:var(--success);border:1px solid rgba(0,200,83,.3)}
+.btn-success-sm:hover{background:rgba(0,200,83,.25)}
+
+/* FORM MODAL */
+.admin-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+.admin-modal-overlay.active{display:flex}
+.admin-modal{background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:1.5rem;width:90%;max-width:550px;max-height:90vh;overflow-y:auto}
+.admin-modal h2{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1.2rem}
+.admin-modal .form-group{margin-bottom:1rem}
+.admin-modal label{display:block;font-size:.8rem;color:var(--text-secondary);margin-bottom:.3rem;font-weight:500}
+.admin-modal input,.admin-modal select,.admin-modal textarea{width:100%;padding:.65rem .8rem;background:var(--dark-bg);border:1px solid var(--dark-border);border-radius:4px;color:var(--text-primary);font-size:.85rem;font-family:'Inter',sans-serif;transition:.2s}
+.admin-modal input:focus,.admin-modal select:focus,.admin-modal textarea:focus{outline:none;border-color:var(--gold)}
+.admin-modal textarea{resize:vertical}
+.admin-modal-actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1.2rem}
+
+/* SECTION PAGE */
+.admin-section{display:none}
+.admin-section.active{display:block}
+
+/* EMPTY STATE */
+.admin-empty{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
+.admin-empty i{font-size:2.5rem;margin-bottom:1rem;display:block}
+.admin-empty p{font-size:.9rem}
+
+/* TOAST */
+.admin-toast-wrap{position:fixed;top:1rem;right:1rem;z-index:300;display:flex;flex-direction:column;gap:.5rem}
+.admin-toast{padding:.6rem 1rem;border-radius:4px;font-size:.8rem;font-weight:500;animation:toastIn .3s ease}
+.admin-toast.success{background:rgba(0,200,83,.2);color:var(--success);border:1px solid rgba(0,200,83,.3)}
+.admin-toast.error{background:rgba(255,68,68,.2);color:var(--danger);border:1px solid rgba(255,68,68,.3)}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* RESPONSIVE */
+@media(max-width:992px){.admin-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+.admin-sidebar{display:none}
+.admin-main{margin-left:0;padding:1rem}
+.admin-cards{grid-template-columns:1fr}
+.admin-table-wrap{overflow-x:auto}
+.admin-modal{width:95%;padding:1rem}
+.admin-header h1{font-size:1.2rem}
+.mobile-nav{display:flex!important}
+}
+.mobile-nav{display:none!important;position:fixed;bottom:0;left:0;right:0;background:var(--black);border-top:1px solid var(--dark-border);padding:.5rem;z-index:100;justify-content:space-around}
+.mobile-nav button{background:none;border:none;color:var(--text-muted);font-size:1.1rem;padding:.5rem;cursor:pointer}
+.mobile-nav button.active{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-wrap">
+<div class="login-box">
+<div class="login-logo">VASTRA</div>
+<div class="login-sub">Admin Panel</div>
+<div id="loginError" class="login-error"></div>
+<input type="text" id="loginUsername" placeholder="Username" autocomplete="username">
+<input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+<button class="login-btn" id="loginBtn" onclick="adminLogin()">Sign In</button>
+</div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-layout" style="display:none">
+<div class="admin-sidebar">
+<div class="admin-logo">VASTRA</div>
+<div class="admin-logo-sub">Admin Panel</div>
+<div class="admin-nav-item active" data-section="dashboard" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+<div class="admin-nav-item" data-section="products" onclick="showSection('products')"><i class="fas fa-box"></i> Products</div>
+<div class="admin-nav-item" data-section="orders" onclick="showSection('orders')"><i class="fas fa-shopping-bag"></i> Orders</div>
+
+<div class="admin-nav-item" data-section="siteconfig" onclick="showSection('siteconfig')"><i class="fas fa-cog"></i> Settings</div>
+<div class="admin-nav-spacer"></div>
+<div class="admin-nav-item" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+
+<div class="admin-main">
+<div class="admin-header">
+<h1 id="sectionTitle">Dashboard</h1>
+<div class="admin-header-right">
+<a href="index.html"><i class="fas fa-external-link-alt"></i> View Website</a>
+<span class="admin-logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</span>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="admin-section active" id="sec-dashboard">
+<div class="admin-cards">
+<div class="admin-card"><div class="admin-card-label">Total Orders</div><div class="admin-card-value" id="statTotalOrders">--</div></div>
+<div class="admin-card"><div class="admin-card-label">Revenue</div><div class="admin-card-value" id="statRevenue">--</div></div>
+<div class="admin-card"><div class="admin-card-label">Products</div><div class="admin-card-value" id="statProducts">--</div></div>
+<div class="admin-card"><div class="admin-card-label">Pending Orders</div><div class="admin-card-value" id="statPending">--</div></div>
+</div>
+<div class="admin-table-wrap">
+<div class="admin-table-header"><h3>Recent Orders</h3></div>
+<table class="admin-table">
+<thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+<tbody id="recentOrdersBody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="admin-section" id="sec-products">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+<h3 style="font-size:1.1rem">All Products</h3>
+<button class="btn-sm btn-gold-sm" onclick="openProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+</div>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead><tr><th>Image</th><th>Name</th><th>Collection</th><th>Price</th><th>Badge</th><th>Actions</th></tr></thead>
+<tbody id="productsBody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- ORDERS -->
+<div class="admin-section" id="sec-orders">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+<h3 style="font-size:1.1rem">All Orders</h3>
+<div style="display:flex;gap:.5rem">
+<select id="orderFilter" onchange="loadOrders()" style="padding:.4rem .6rem;background:var(--dark-card);border:1px solid var(--dark-border);color:var(--text-primary);border-radius:4px;font-size:.8rem">
+<option value="">All Status</option>
+<option value="placed">Placed</option>
+<option value="confirmed">Confirmed</option>
+<option value="processing">Processing</option>
+<option value="shipped">Shipped</option>
+<option value="delivered">Delivered</option>
+<option value="cancelled">Cancelled</option>
+</select>
+</div>
+</div>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="ordersBody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- SITE CONFIG -->
+<div class="admin-section" id="sec-siteconfig">
+<div style="margin-bottom:1.5rem"><h3 style="font-size:1.1rem">Site Settings</h3></div>
+<div style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:1.5rem;max-width:600px">
+<div class="form-group"><label>UPI ID</label><input type="text" id="cfgUpiId" placeholder="jatinpepsu123@okhdfcbank"></div>
+<div class="form-group"><label>WhatsApp Number</label><input type="text" id="cfgWhatsapp" placeholder="918168540355"></div>
+<div class="form-group"><label>Site Title</label><input type="text" id="cfgSiteTitle" placeholder="VASTRA"></div>
+<div class="form-group"><label>Site Tagline</label><input type="text" id="cfgSiteTagline" placeholder="Wear Your Identity"></div>
+<div class="form-group"><label>Founder Name</label><input type="text" id="cfgFounderName" placeholder="Jatin"></div>
+<div class="form-group"><label>Founder Bio</label><textarea id="cfgFounderBio" rows="3" placeholder="Founder bio..."></textarea></div>
+<button class="btn-sm btn-gold-sm" onclick="saveSiteConfig()" style="margin-top:1rem"><i class="fas fa-save"></i> Save Settings</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="admin-modal-overlay" id="productModal">
+<div class="admin-modal">
+<h2 id="productModalTitle">Add Product</h2>
+<input type="hidden" id="pmId">
+<div class="form-group"><label>Name *</label><input type="text" id="pmName" placeholder="Product name"></div>
+<div class="form-group"><label>Collection *</label><select id="pmCollection"><option value="mythology">Mythology</option><option value="anime">Anime</option><option value="streetwear">Streetwear</option><option value="oversized">Oversized</option></select></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+<div class="form-group"><label>Price (₹) *</label><input type="number" id="pmPrice" placeholder="899"></div>
+<div class="form-group"><label>Original Price (₹) *</label><input type="number" id="pmOriginalPrice" placeholder="1299"></div>
+</div>
+<div class="form-group"><label>Image URL</label><input type="text" id="pmImage" placeholder="assets/images/products/x.jpg or cloudinary URL"></div>
+<div class="form-group"><label>Badge</label><select id="pmBadge"><option value="">None</option><option value="bestseller">Bestseller</option><option value="new">New</option><option value="limited">Limited</option></select></div>
+<div class="form-group"><label>Sizes (comma separated)</label><input type="text" id="pmSizes" placeholder="S,M,L,XL,XXL" value="S,M,L,XL,XXL"></div>
+<div class="form-group"><label>Rating</label><input type="number" id="pmRating" placeholder="4.5" step="0.1" min="0" max="5" value="4.5"></div>
+<div class="form-group"><label>Description</label><textarea id="pmDesc" rows="3" placeholder="Product description..."></textarea></div>
+<div class="admin-modal-actions">
+<button class="btn-sm btn-outline-sm" onclick="closeProductModal()">Cancel</button>
+<button class="btn-sm btn-gold-sm" onclick="saveProduct()">Save Product</button>
+</div>
+</div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="admin-modal-overlay" id="orderModal">
+<div class="admin-modal" style="max-width:600px">
+<h2>Order Details</h2>
+<div id="orderDetailContent"></div>
+<div class="admin-modal-actions">
+<button class="btn-sm btn-outline-sm" onclick="closeOrderModal()">Close</button>
+</div>
+</div>
+</div>
+
+<!-- TOAST -->
+<div class="admin-toast-wrap" id="adminToastWrap"></div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+<button class="active" data-section="dashboard" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i></button>
+<button data-section="products" onclick="showSection('products')"><i class="fas fa-box"></i></button>
+<button data-section="orders" onclick="showSection('orders')"><i class="fas fa-shopping-bag"></i></button>
+
+<button data-section="siteconfig" onclick="showSection('siteconfig')"><i class="fas fa-cog"></i></button>
+</div>
+
+<script>
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000/api' : '/api';
+let ADMIN_TOKEN = localStorage.getItem('vastra_admin_token');
+
+function adminToast(msg, type) {
+    const wrap = document.getElementById('adminToastWrap');
+    const t = document.createElement('div');
+    t.className = 'admin-toast ' + type;
+    t.textContent = msg;
+    wrap.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+}
+
+async function apiCall(path, options = {}) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (ADMIN_TOKEN) headers['Authorization'] = 'Bearer ' + ADMIN_TOKEN;
+    const res = await fetch(API + path, { ...options, headers });
+    return res.json();
+}
+
+// AUTH
+async function adminLogin() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const errEl = document.getElementById('loginError');
+    const btn = document.getElementById('loginBtn');
+
+    if (!username || !password) { errEl.textContent = 'Enter username and password'; errEl.style.display = 'block'; return; }
+
+    btn.disabled = true; btn.textContent = 'Signing in...';
+    try {
+        const data = await apiCall('/auth/login', { method: 'POST', body: JSON.stringify({ username, password }) });
+        if (data.success) {
+            ADMIN_TOKEN = data.data.token;
+            localStorage.setItem('vastra_admin_token', ADMIN_TOKEN);
+            showAdminPanel();
+        } else {
+            errEl.textContent = data.message || 'Login failed';
+            errEl.style.display = 'block';
+        }
+    } catch (e) {
+        errEl.textContent = 'Server not reachable';
+        errEl.style.display = 'block';
+    }
+    btn.disabled = false; btn.textContent = 'Sign In';
+}
+
+function adminLogout() {
+    ADMIN_TOKEN = null;
+    localStorage.removeItem('vastra_admin_token');
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+}
+
+async function showAdminPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'flex';
+    loadDashboard();
+}
+
+// SECTIONS
+function showSection(section) {
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.admin-nav-item[data-section]').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.mobile-nav button[data-section]').forEach(n => n.classList.remove('active'));
+    document.getElementById('sec-' + section).classList.add('active');
+    document.querySelector(`.admin-nav-item[data-section="${section}"]`).classList.add('active');
+    document.querySelector(`.mobile-nav button[data-section="${section}"]`)?.classList.add('active');
+
+    const titles = { dashboard: 'Dashboard', products: 'Products', orders: 'Orders', siteconfig: 'Settings' };
+    document.getElementById('sectionTitle').textContent = titles[section] || section;
+
+    if (section === 'dashboard') loadDashboard();
+    if (section === 'products') loadProducts();
+    if (section === 'orders') loadOrders();
+    if (section === 'siteconfig') loadSiteConfig();
+}
+
+// DASHBOARD
+async function loadDashboard() {
+    try {
+        const data = await apiCall('/admin/stats');
+        if (data.success) {
+            document.getElementById('statTotalOrders').textContent = data.data.totalOrders;
+            document.getElementById('statRevenue').textContent = '₹' + data.data.totalRevenue.toLocaleString();
+            document.getElementById('statProducts').textContent = data.data.totalProducts;
+            document.getElementById('statPending').textContent = data.data.pendingOrders;
+        }
+        const orders = await apiCall('/orders?limit=5');
+        if (orders.success) {
+            document.getElementById('recentOrdersBody').innerHTML = orders.data.map(o => `<tr>
+                <td style="font-weight:600">${o.orderId}</td>
+                <td>${o.customer.name}</td>
+                <td>₹${o.subtotal}</td>
+                <td><span class="badge-status badge-${o.orderStatus}">${o.orderStatus}</span></td>
+                <td>${new Date(o.createdAt).toLocaleDateString()}</td>
+            </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No orders yet</td></tr>';
+        }
+    } catch (e) {
+        document.getElementById('recentOrdersBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Could not load data</td></tr>';
+    }
+}
+
+// PRODUCTS
+async function loadProducts() {
+    try {
+        const data = await apiCall('/products?limit=100');
+        if (data.success) {
+            document.getElementById('productsBody').innerHTML = data.data.map(p => `<tr>
+                <td><img src="${p.image}" alt="" style="width:40px;height:40px;object-fit:cover;border-radius:4px" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><rect fill=%22%23222%22 width=%2240%22 height=%2240%22/></svg>'"></td>
+                <td style="font-weight:500">${p.name}</td>
+                <td style="text-transform:capitalize">${p.collection}</td>
+                <td>₹${p.price}</td>
+                <td>${p.badge ? '<span class="badge-status badge-' + (p.badge === 'bestseller' ? 'delivered' : p.badge === 'new' ? 'placed' : 'pending') + '">' + p.badge + '</span>' : '-'}</td>
+                <td>
+                    <button class="btn-sm btn-outline-sm" onclick="editProduct('${p._id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteProduct('${p._id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`).join('') || '<tr><td colspan="6" class="admin-empty">No products</td></tr>';
+        }
+    } catch (e) {
+        document.getElementById('productsBody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">Could not load products</td></tr>';
+    }
+}
+
+function openProductModal(product) {
+    document.getElementById('productModalTitle').textContent = product ? 'Edit Product' : 'Add Product';
+    document.getElementById('pmId').value = product ? product._id : '';
+    document.getElementById('pmName').value = product ? product.name : '';
+    document.getElementById('pmCollection').value = product ? product.collection : 'mythology';
+    document.getElementById('pmPrice').value = product ? product.price : '';
+    document.getElementById('pmOriginalPrice').value = product ? product.originalPrice : '';
+    document.getElementById('pmImage').value = product ? product.image : '';
+    document.getElementById('pmBadge').value = product ? (product.badge || '') : '';
+    document.getElementById('pmSizes').value = product ? product.sizes.join(',') : 'S,M,L,XL,XXL';
+    document.getElementById('pmRating').value = product ? product.rating : '4.5';
+    document.getElementById('pmDesc').value = product ? product.desc : '';
+    document.getElementById('productModal').classList.add('active');
+}
+
+function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
+
+async function editProduct(id) {
+    try {
+        const data = await apiCall('/products/' + id);
+        if (data.success) openProductModal(data.data);
+    } catch (e) { adminToast('Failed to load product', 'error'); }
+}
+
+async function saveProduct() {
+    const id = document.getElementById('pmId').value;
+    const body = {
+        name: document.getElementById('pmName').value.trim(),
+        collection: document.getElementById('pmCollection').value,
+        price: Number(document.getElementById('pmPrice').value),
+        originalPrice: Number(document.getElementById('pmOriginalPrice').value),
+        image: document.getElementById('pmImage').value.trim(),
+        badge: document.getElementById('pmBadge').value || null,
+        sizes: document.getElementById('pmSizes').value.split(',').map(s => s.trim()).filter(Boolean),
+        rating: Number(document.getElementById('pmRating').value) || 4.5,
+        desc: document.getElementById('pmDesc').value.trim(),
+        active: true
+    };
+    if (!body.name || !body.price || !body.originalPrice) { adminToast('Name, price, and original price are required', 'error'); return; }
+
+    try {
+        const data = id
+            ? await apiCall('/products/' + id, { method: 'PUT', body: JSON.stringify(body) })
+            : await apiCall('/products', { method: 'POST', body: JSON.stringify(body) });
+        if (data.success) {
+            adminToast(id ? 'Product updated' : 'Product added', 'success');
+            closeProductModal();
+            loadProducts();
+        } else {
+            adminToast(data.message || 'Failed', 'error');
+        }
+    } catch (e) { adminToast('Server error', 'error'); }
+}
+
+async function deleteProduct(id) {
+    if (!confirm('Delete this product?')) return;
+    try {
+        const data = await apiCall('/products/' + id, { method: 'DELETE' });
+        if (data.success) { adminToast('Product deleted', 'success'); loadProducts(); }
+        else adminToast(data.message, 'error');
+    } catch (e) { adminToast('Failed', 'error'); }
+}
+
+// ORDERS
+async function loadOrders() {
+    const filter = document.getElementById('orderFilter')?.value || '';
+    try {
+        const data = await apiCall('/orders' + (filter ? '?status=' + filter : ''));
+        if (data.success) {
+            document.getElementById('ordersBody').innerHTML = data.data.map(o => `<tr>
+                <td style="font-weight:600;cursor:pointer" onclick="viewOrder('${o._id}')">${o.orderId}</td>
+                <td>${o.customer.name}<br><span style="font-size:.75rem;color:var(--text-muted)">${o.customer.phone}</span></td>
+                <td>${o.items.length} item${o.items.length > 1 ? 's' : ''}</td>
+                <td>₹${o.subtotal}</td>
+                <td><span class="badge-status badge-${o.paymentStatus}">${o.paymentStatus}</span></td>
+                <td><span class="badge-status badge-${o.orderStatus}">${o.orderStatus}</span></td>
+                <td>
+                    <select onchange="updateOrderStatus('${o._id}',this.value)" style="padding:.25rem .4rem;background:var(--dark-card);border:1px solid var(--dark-border);color:var(--text-primary);border-radius:3px;font-size:.75rem">
+                        <option value="placed" ${o.orderStatus==='placed'?'selected':''}>Placed</option>
+                        <option value="confirmed" ${o.orderStatus==='confirmed'?'selected':''}>Confirmed</option>
+                        <option value="processing" ${o.orderStatus==='processing'?'selected':''}>Processing</option>
+                        <option value="shipped" ${o.orderStatus==='shipped'?'selected':''}>Shipped</option>
+                        <option value="delivered" ${o.orderStatus==='delivered'?'selected':''}>Delivered</option>
+                        <option value="cancelled" ${o.orderStatus==='cancelled'?'selected':''}>Cancelled</option>
+                    </select>
+                </td>
+            </tr>`).join('') || '<tr><td colspan="7" class="admin-empty">No orders</td></tr>';
+        }
+    } catch (e) {
+        document.getElementById('ordersBody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">Could not load orders</td></tr>';
+    }
+}
+
+async function updateOrderStatus(id, status) {
+    try {
+        const data = await apiCall('/orders/' + id + '/status', { method: 'PUT', body: JSON.stringify({ orderStatus: status }) });
+        if (data.success) { adminToast('Order status updated', 'success'); loadOrders(); }
+        else adminToast(data.message, 'error');
+    } catch (e) { adminToast('Failed', 'error'); }
+}
+
+async function viewOrder(id) {
+    try {
+        const data = await apiCall('/orders/' + id);
+        if (data.success) {
+            const o = data.data;
+            document.getElementById('orderDetailContent').innerHTML = `
+                <p><strong>Order ID:</strong> ${o.orderId}</p>
+                <p><strong>Date:</strong> ${new Date(o.createdAt).toLocaleString()}</p>
+                <p><strong>Status:</strong> <span class="badge-status badge-${o.orderStatus}">${o.orderStatus}</span></p>
+                <p><strong>Payment:</strong> <span class="badge-status badge-${o.paymentStatus}">${o.paymentStatus}</span> (${o.paymentMethod})</p>
+                <hr style="border-color:var(--dark-border);margin:.8rem 0">
+                <p><strong>Customer:</strong> ${o.customer.name}</p>
+                <p><strong>Phone:</strong> ${o.customer.phone}</p>
+                ${o.customer.email ? '<p><strong>Email:</strong> ' + o.customer.email + '</p>' : ''}
+                <p><strong>Address:</strong> ${o.customer.address}${o.customer.address2 ? ', ' + o.customer.address2 : ''}, ${o.customer.city}, ${o.customer.state} - ${o.customer.pincode}</p>
+                <hr style="border-color:var(--dark-border);margin:.8rem 0">
+                <h4 style="margin-bottom:.5rem">Items</h4>
+                ${o.items.map(i => `<div style="display:flex;justify-content:space-between;padding:.3rem 0;font-size:.85rem"><span>${i.name} (${i.size}) × ${i.qty}</span><span>₹${i.price * i.qty}</span></div>`).join('')}
+                <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-top:2px solid var(--gold);margin-top:.5rem;font-weight:700"><span>Total</span><span>₹${o.subtotal}</span></div>
+                ${o.paymentProof ? '<p style="margin-top:.5rem"><strong>Payment Proof:</strong> <a href="' + o.paymentProof + '" target="_blank" style="color:var(--gold)">View</a></p>' : ''}
+            `;
+            document.getElementById('orderModal').classList.add('active');
+        }
+    } catch (e) { adminToast('Failed to load order', 'error'); }
+}
+
+function closeOrderModal() { document.getElementById('orderModal').classList.remove('active'); }
+
+// DESIGNS
+async function loadDesigns() {
+    try {
+        const data = await apiCall('/designs');
+        if (data.success) {
+            document.getElementById('designsBody').innerHTML = data.data.map(d => `<tr>
+                <td><img src="${d.imageUrl}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:4px" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22%23222%22 width=%2250%22 height=%2250%22/></svg>'"></td>
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.prompt}</td>
+                <td>${d.style}</td>
+                <td><span class="badge-status badge-${d.status === 'completed' ? 'delivered' : d.status === 'failed' ? 'cancelled' : 'placed'}">${d.status}</span></td>
+                <td>${new Date(d.createdAt).toLocaleDateString()}</td>
+                <td>
+                    <button class="btn-sm ${d.featured ? 'btn-success-sm' : 'btn-outline-sm'}" onclick="toggleDesignFeature('${d._id}',${!d.featured})"><i class="fas fa-star"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteDesign('${d._id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`).join('') || '<tr><td colspan="6" class="admin-empty">No designs yet</td></tr>';
+        }
+    } catch (e) {
+        document.getElementById('designsBody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">Could not load designs</td></tr>';
+    }
+}
+
+async function toggleDesignFeature(id, featured) {
+    try {
+        const data = await apiCall('/designs/' + id + '/feature', { method: 'PUT', body: JSON.stringify({ featured }) });
+        if (data.success) { adminToast(featured ? 'Featured' : 'Unfeatured', 'success'); loadDesigns(); }
+    } catch (e) { adminToast('Failed', 'error'); }
+}
+
+async function deleteDesign(id) {
+    if (!confirm('Delete this design?')) return;
+    try {
+        const data = await apiCall('/designs/' + id, { method: 'DELETE' });
+        if (data.success) { adminToast('Design deleted', 'success'); loadDesigns(); }
+    } catch (e) { adminToast('Failed', 'error'); }
+}
+
+// SITE CONFIG
+async function loadSiteConfig() {
+    try {
+        const data = await apiCall('/siteconfig');
+        if (data.success) {
+            const c = data.data;
+            document.getElementById('cfgUpiId').value = c.upiId || '';
+            document.getElementById('cfgWhatsapp').value = c.whatsappNumber || '';
+            document.getElementById('cfgSiteTitle').value = c.siteTitle || '';
+            document.getElementById('cfgSiteTagline').value = c.siteTagline || '';
+            document.getElementById('cfgFounderName').value = c.founderName || '';
+            document.getElementById('cfgFounderBio').value = c.founderBio || '';
+        }
+    } catch (e) {}
+}
+
+async function saveSiteConfig() {
+    try {
+        const data = await apiCall('/siteconfig', {
+            method: 'PUT',
+            body: JSON.stringify({
+                upiId: document.getElementById('cfgUpiId').value.trim(),
+                whatsappNumber: document.getElementById('cfgWhatsapp').value.trim(),
+                siteTitle: document.getElementById('cfgSiteTitle').value.trim(),
+                siteTagline: document.getElementById('cfgSiteTagline').value.trim(),
+                founderName: document.getElementById('cfgFounderName').value.trim(),
+                founderBio: document.getElementById('cfgFounderBio').value.trim()
+            })
+        });
+        if (data.success) adminToast('Settings saved', 'success');
+        else adminToast(data.message, 'error');
+    } catch (e) { adminToast('Failed', 'error'); }
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded', function() {
+    if (ADMIN_TOKEN) {
+        apiCall('/auth/verify').then(data => {
+            if (data.success) showAdminPanel();
+            else adminLogout();
+        }).catch(() => adminLogout());
+    }
+    document.getElementById('loginPassword').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') adminLogin();
+    });
+    document.querySelectorAll('.admin-modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+    });
+});
+</script>
+</body>
+</html>
